@@ -1,10 +1,24 @@
 # ReleaseGuard for n8n
 
+[![ReleaseGuard adversarial validation](https://github.com/achirothmane/releaseguard-n8n/actions/workflows/ci.yml/badge.svg)](https://github.com/achirothmane/releaseguard-n8n/actions/workflows/ci.yml)
+
 **Canary releases, evidence gates, and automatic rollback for production n8n workflows.**
 
 ReleaseGuard protects **synchronous read-only JSON workflows** while a new version takes production traffic. Run Stable and Candidate side by side, route 5% → 25% → 50% → 100%, and make deterministic PROMOTE / HOLD / ROLLBACK decisions from measured executions.
 
 A webhook returning HTTP 200 can still be a broken release. ReleaseGuard validates the output before returning it, retains the original Candidate failure when a fallback succeeds, and stops new Candidate admissions after a confirmed rollback.
+
+## See the proof first
+
+A tested rollback path looks like this:
+
+`Candidate regression → ROLLBACK → Stable-only routing → evidence recorded → alert queued`
+
+The repository exercises that behavior with real HTTP/PostgreSQL adversarial tests and real n8n production-webhook integration tests. The current standalone CI is green: [ReleaseGuard adversarial validation](https://github.com/achirothmane/releaseguard-n8n/actions/workflows/ci.yml).
+
+![Actual rollback dashboard from the tested build](docs/images/01-real-rollback-dashboard.png)
+
+ReleaseGuard is **not** a security scanner, backup tool, or random traffic splitter. It is a runtime release-control layer for deciding whether a Candidate should receive more traffic, hold at the current stage, or be removed from traffic.
 
 ## Choose your path
 
@@ -33,9 +47,9 @@ A webhook returning HTTP 200 can still be a broken release. ReleaseGuard validat
 
 ## Validation evidence
 
-The original build passed 33 policy/security tests, 22 HTTP/PostgreSQL adversarial tests, and real n8n 2.41.4 production-webhook scenarios. The standalone CI repeats those checks after extraction; original evidence alone does not establish that the new repository passed. See [the original run](https://github.com/achirothmane/workflow-failure-lab/actions/runs/36768732791) and [validation](docs/validation.md).
+The original build passed 33 policy/security tests, 22 HTTP/PostgreSQL adversarial tests, and real n8n 2.41.4 production-webhook scenarios. The standalone CI repeats those checks after extraction; original evidence alone does not establish that the new repository passed. See [the original run](https://github.com/achirothmane/workflow-failure-lab/actions/runs/36768732791), the [standalone CI](https://github.com/achirothmane/releaseguard-n8n/actions/workflows/ci.yml), and [validation](docs/validation.md).
 
-![Actual rollback dashboard from the original tested build](docs/images/01-real-rollback-dashboard.png)
+The evidence covers regression detection, invalid output, latency/error regressions, rollback, delayed rollback, stale tickets, duplicate requests, concurrent evaluators, observation loss, and other failure cases documented in the validation report. It does **not** prove universal production safety or compensate irreversible downstream side effects.
 
 ## Start
 
