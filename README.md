@@ -4,6 +4,12 @@ ReleaseGuard protects **synchronous read-only JSON workflows** while a new versi
 
 A webhook returning HTTP 200 can still be a broken release. ReleaseGuard validates the output before returning it, retains the original Candidate failure when a fallback succeeds, and stops new Candidate admissions after a confirmed rollback.
 
+## Production Pack
+
+The open-source repository contains the core ReleaseGuard implementation and validation material. For teams that want a ready-to-use production package, the **ReleaseGuard Production Pack** adds rollout policy presets, a deployment checklist, a rollback drill, an incident runbook, configuration examples, and the tested release bundle.
+
+**Get the Production Pack:** https://othmaneachir.gumroad.com/l/releaseguard-n8n-production
+
 ## What you receive
 
 - Importable Gateway, Stable, Candidate, and alert-receiver workflow JSON.
