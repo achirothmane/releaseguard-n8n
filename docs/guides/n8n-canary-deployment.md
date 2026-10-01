@@ -52,7 +52,7 @@ The open-source repository contains the workflows, service, PostgreSQL schema, t
 
 For teams that want the tested release bundle plus production rollout presets, deployment checklist, rollback drill, incident runbook, and configuration examples:
 
-**ReleaseGuard Production Pack:** https://othmaneachir.gumroad.com/l/releaseguard-n8n-production
+**ReleaseGuard Production Pack:** https://othmaneachir.gumroad.com/l/releaseguard-n8n-production?utm_source=github&utm_medium=seo_guide&utm_campaign=releaseguard_n8n&utm_content=canary_deployment
 
 See also:
 

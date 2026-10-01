@@ -12,7 +12,7 @@ A webhook returning HTTP 200 can still be a broken release. ReleaseGuard validat
 
 **Production Pack — $39 one-time:** tested release bundle, rollout policy presets, deployment checklist, rollback drill, incident runbook, configuration examples, and release evidence.
 
-**Get the Production Pack:** https://othmaneachir.gumroad.com/l/releaseguard-n8n-production
+**Get the Production Pack:** https://othmaneachir.gumroad.com/l/releaseguard-n8n-production?utm_source=github&utm_medium=readme&utm_campaign=releaseguard_n8n
 
 ## Practical guides
 

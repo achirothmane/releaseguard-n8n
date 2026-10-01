@@ -54,7 +54,7 @@ The repository contains the core implementation and validation evidence.
 
 The **ReleaseGuard Production Pack** adds a tested release bundle, production policy presets, deployment checklist, rollback drill, incident runbook, configuration examples, and release evidence:
 
-https://othmaneachir.gumroad.com/l/releaseguard-n8n-production
+https://othmaneachir.gumroad.com/l/releaseguard-n8n-production?utm_source=github&utm_medium=seo_guide&utm_campaign=releaseguard_n8n&utm_content=production_safety
 
 See also:
 

@@ -43,7 +43,7 @@ The repository includes adversarial HTTP/PostgreSQL tests and real n8n productio
 
 For a packaged production workflow with presets and a rollback drill:
 
-**ReleaseGuard Production Pack:** https://othmaneachir.gumroad.com/l/releaseguard-n8n-production
+**ReleaseGuard Production Pack:** https://othmaneachir.gumroad.com/l/releaseguard-n8n-production?utm_source=github&utm_medium=seo_guide&utm_campaign=releaseguard_n8n&utm_content=automatic_rollback
 
 See also:
 
