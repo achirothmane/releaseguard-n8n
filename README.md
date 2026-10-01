@@ -1,14 +1,24 @@
 # ReleaseGuard for n8n
 
-ReleaseGuard protects **synchronous read-only JSON workflows** while a new version takes production traffic. Start with Stable and Candidate, route 5% → 25% → 50% → 100%, and make deterministic PROMOTE / HOLD / ROLLBACK decisions from measured executions.
+**Canary releases, evidence gates, and automatic rollback for production n8n workflows.**
+
+ReleaseGuard protects **synchronous read-only JSON workflows** while a new version takes production traffic. Run Stable and Candidate side by side, route 5% → 25% → 50% → 100%, and make deterministic PROMOTE / HOLD / ROLLBACK decisions from measured executions.
 
 A webhook returning HTTP 200 can still be a broken release. ReleaseGuard validates the output before returning it, retains the original Candidate failure when a fallback succeeds, and stops new Candidate admissions after a confirmed rollback.
 
-## Production Pack
+## Choose your path
 
-The open-source repository contains the core ReleaseGuard implementation and validation material. For teams that want a ready-to-use production package, the **ReleaseGuard Production Pack** adds rollout policy presets, a deployment checklist, a rollback drill, an incident runbook, configuration examples, and the tested release bundle.
+**Open-source core:** inspect the implementation, import the workflows, reproduce the tests, and run ReleaseGuard yourself.
+
+**Production Pack — $39 one-time:** tested release bundle, rollout policy presets, deployment checklist, rollback drill, incident runbook, configuration examples, and release evidence.
 
 **Get the Production Pack:** https://othmaneachir.gumroad.com/l/releaseguard-n8n-production
+
+## Practical guides
+
+- [n8n canary deployment: roll out workflow changes gradually](docs/guides/n8n-canary-deployment.md)
+- [n8n automatic rollback: stop a bad workflow release](docs/guides/n8n-automatic-rollback.md)
+- [n8n production workflow safety: evidence before 100% traffic](docs/guides/n8n-production-workflow-safety.md)
 
 ## What you receive
 
