@@ -29,8 +29,8 @@ function install(command, pass = true) {
   });
   const raw = (r.stdout || '') + (r.stderr || '');
   for (const value of Object.values(env).filter(x => x.length >= 32)) assert.ok(!raw.includes(value), 'installer leaked a secret');
-  const output = JSON.parse((pass ? r.stdout : r.stderr).trim());
   assert.equal(r.status, pass ? 0 : 1, redact(raw));
+  const output = JSON.parse((pass ? r.stdout : r.stderr).trim());
   return output;
 }
 const inspectSource = `
