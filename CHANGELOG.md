@@ -12,3 +12,8 @@ Initial standalone extraction of the verified ReleaseGuard build.
 - Tested dependency lockfile included for reproducible installation and container builds.
 
 See [extraction provenance](docs/EXTRACTION.md) and [validation scope](docs/validation.md). This version is a release candidate for a controlled pilot.
+# Unreleased
+
+- Add a two-stage local Compose installer: preserve keys, create the stack, bind credentials, publish workflows, register the demo, and verify authenticated production webhooks.
+- Refuse unmanaged data or changed definitions and preserve an existing rollback on repeat installation.
+- Add unit coverage and a fresh actual n8n/Compose installation CI job with evidence artifacts.
