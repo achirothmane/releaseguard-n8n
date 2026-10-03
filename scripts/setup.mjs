@@ -119,8 +119,17 @@ async function smoke(env, spec, release, n8n) {
   const tests = [];
   const arms = release.candidatePct === 0 ? ['stable'] : release.candidatePct === 100 ? ['candidate'] : ['stable', 'candidate'];
   for (const arm of arms) {
-    const response = await jsonRequest(n8n + '/webhook/releaseguard', { data: { leadId: 'SETUP-SMOKE', score: 81 },
-      headers: { 'x-releaseguard-client': env.CLIENT_TOKEN, 'x-request-id': cohortKey(env, spec.id, release.candidatePct, arm) } });
+    const requestId = cohortKey(env, spec.id, release.candidatePct, arm);
+    const deadline = Date.now() + 30000;
+    let response;
+    do {
+      response = await jsonRequest(n8n + '/webhook/releaseguard', { data: { leadId: 'SETUP-SMOKE', score: 81 },
+        headers: { 'x-releaseguard-client': env.CLIENT_TOKEN, 'x-request-id': requestId } });
+      // The readiness endpoint can precede production webhook registration after
+      // CLI publication. Retry only a missing webhook, with the same request ID.
+      if (response.status !== 404 || Date.now() >= deadline) break;
+      await new Promise(r => setTimeout(r, 1000));
+    } while (true);
     const b = response.body;
     if (response.status !== 200 || b.servedBy !== arm || b.fallback !== false || b.result?.leadId !== 'SETUP-SMOKE'
       || b.result?.score !== 81 || b.result?.priority !== 'HIGH' || b.result?.engine !== arm) fail('GATEWAY_' + arm.toUpperCase() + '_SMOKE_FAILED');
