@@ -10,9 +10,10 @@ Keep the business write in the caller **after** a validated response. ReleaseGua
 
 The provided stack binds the two HTTP ports to localhost. This is a local setup, not a public TLS deployment.
 
+Requires Node 22 or later and Docker Compose. No host npm dependency installation is needed for the automatic installer.
+
 ~~~sh
-node scripts/generate-env.mjs
-docker compose up -d --build
+node scripts/setup.mjs start
 ~~~
 
 Keep .env and both persistent volumes. RESPONSE_KEY_HEX decrypts cached replies and fixes cohorts/fingerprints; do not rotate it casually. N8N_ENCRYPTION_KEY protects n8n credentials. Back up these keys together with their respective databases.
@@ -20,6 +21,22 @@ Keep .env and both persistent volumes. RESPONSE_KEY_HEX decrypts cached replies 
 Open http://127.0.0.1:5678 and create the n8n owner. No paid n8n plan is required for the demonstrated webhook approach. Source control features are complementary and separate.
 
 ## 3. Import workflows and bind credentials
+
+For the bundled, dedicated local Compose stack, after creating the owner account run:
+
+~~~sh
+node scripts/setup.mjs install
+~~~
+
+This binds four credentials, imports and publishes four workflows using n8n's own CLI, restarts n8n to register production webhooks, registers the demo release, and checks Stable and Candidate through the authenticated Gateway. Credentials pass through stdin and temporary container RAM files; the temporary files are removed. Existing keys are preserved. A repeat installation verifies the existing installation without importing again or restarting a rolled-back release.
+
+Automation supports the pinned n8n 2.41.4 image with its default SQLite database. It refuses unmanaged workflows or credentials, changed workflow definitions, changed keys, or an existing release without its installation manifest. Use the manual procedure below for existing installations, n8n Cloud, changed demo definitions, or PostgreSQL-backed n8n. Back up both databases and keys before any migration. Verification of workflow definitions occurs during installation; this is not continuous workflow attestation.
+
+An interrupted installation can resume with the same files and keys. If it reports `INSTALLATION_LOCKED`, first confirm no installer is running before removing the directory `/home/node/.n8n/.releaseguard-install-lock` inside the container. Preserve `releaseguard-install.json`; deleting it is not a supported reset. `ENV_OR_BUNDLE_CHANGED_USE_MANUAL_SETUP`, `WORKFLOW_CHANGED_USE_MANUAL_SETUP`, and `STACK_HAS_UNMANAGED_DATA` require operator review and manual setup. `OWNER_SETUP_REQUIRED` means create the owner in the UI, then repeat install. `DOCKER_COMPOSE_FAILED` requires inspecting local Compose logs. The installer does not delete volumes or silently rotate credentials.
+
+Optional `.env` settings `RG_GUARD_PORT` and `RG_N8N_PORT` change the localhost ports. Use the same `--project <name>` for both commands if selecting a non-default Compose project.
+
+### Manual installation
 
 Import each file through n8n's Import from File menu. The exported files contain no credentials or pinned payloads.
 

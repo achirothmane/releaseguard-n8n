@@ -56,17 +56,16 @@ The evidence covers regression detection, invalid output, latency/error regressi
 Requires Docker Compose, or Node 22 + PostgreSQL 16 + an existing n8n instance. The tested n8n target is 2.41.4. The dependency lockfile is committed; local installation, Docker builds, and CI use `npm ci`.
 
 ~~~sh
-node scripts/generate-env.mjs
-docker compose up -d --build
+node scripts/setup.mjs start
 ~~~
 
-Open n8n at http://127.0.0.1:5678, create the owner account, import the four JSON files, configure the four credentials, and publish the workflows. Then:
+Open n8n at http://127.0.0.1:5678 and create the owner account. Then automatically bind credentials, publish the four workflows, register the demo, and verify production requests:
 
 ~~~sh
-npm ci
-node --env-file=.env scripts/register.mjs
-node --env-file=.env scripts/doctor.mjs
+node scripts/setup.mjs install
 ~~~
+
+The installer preserves existing keys and release state, and refuses changed or unmanaged data. It supports the bundled SQLite-backed Compose instance; use the manual setup guide for an existing n8n installation.
 
 Open http://127.0.0.1:8080 to inspect the release. Follow [SETUP.md](docs/SETUP.md) for the complete installation and credential mapping.
 
