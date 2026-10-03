@@ -166,7 +166,7 @@ export async function setup(argv) {
   const input = await bundle(root, env);
   const registered = await jsonRequest(api + '/v1/releases/' + input.spec.id, { token: env.ADMIN_TOKEN });
   if (registered.status !== 200) fail('GUARD_ADMIN_AUTH_FAILED');
-  if (registered.body.release && canonical(registered.body.release.config) !== canonical(input.normalizedConfig)) fail('EXISTING_RELEASE_CONFIG_CONFLICT');
+  if (registered.body.release && registered.body.release.configHash !== hash(input.normalizedConfig)) fail('EXISTING_RELEASE_CONFIG_CONFLICT');
   input.existingRelease = !!registered.body.release;
   const workerSource = await readFile(join(root, 'scripts/n8n-install-worker.cjs'), 'utf8');
   const worker = action => {
